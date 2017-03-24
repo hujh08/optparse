@@ -1,7 +1,15 @@
 #include <stdlib.h>
+#include <string.h>
 
-#include "cstrlib.h"
 #include "optparse.h"
+
+int opt_strind(const char *s1, char c)
+{
+    int nPos=-1;
+    char *res=strchr(s1, c);
+    if(res) nPos=res-s1;
+    return nPos;
+}
 
 int optparse(int argc, char * const argv[],
              optSpec *opts,
@@ -53,8 +61,8 @@ int optparse(int argc, char * const argv[],
             case '?':
                 return -1;
             default:
-                optInd=strindex(shortopts,
-                                (char) opt);
+                optInd=opt_strind(shortopts,
+                                  (char) opt);
                 optvals[optInd].set=1;
                 optvals[optInd].val=optarg;
         }
